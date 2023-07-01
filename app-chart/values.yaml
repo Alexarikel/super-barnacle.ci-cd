@@ -1,0 +1,10 @@
+---
+db:
+  name: ""
+  table: ""
+  databaseUrl: ""
+
+image:
+  repository: ""
+  tag: ""
+  dockerKeySecret: ""

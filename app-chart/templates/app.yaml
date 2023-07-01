@@ -1,0 +1,69 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Release.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: HOST
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-configmap
+              key: database_url
+        - name: USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-secret
+              key: db_user
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-secret
+              key: db_password
+        - name: DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-configmap
+              key: database
+        - name: PORT
+          value: "3306"
+        - name: TABLE
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-configmap
+              key: table
+      imagePullSecrets:
+          - name: {{ .Values.image.dockerKeySecret }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-service
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  type: LoadBalancer
+  selector:
+    app: {{ .Release.Name }}
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+
