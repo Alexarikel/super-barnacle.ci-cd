@@ -7,7 +7,7 @@ pipeline {
     AWS_ACCOUNT_ID = "exampleid"
     AWS_DEFAULT_REGION = "us-east-1"
     AWS_ACCESS = credentials('aws_access')
-    IMAGE_REPO_NAME = "app-repo"
+    IMAGE_REPO_NAME = "my-app"
     IMAGE_TAG = "1.${BUILD_NUMBER}"
     REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     MAIL = "alexarikel@gmail.com"
