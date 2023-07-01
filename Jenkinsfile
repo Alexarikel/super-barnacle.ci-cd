@@ -61,6 +61,27 @@ pipeline {
                 """
             }
         }
+        stage('Checkout to gitops repo') {
+            steps {
+                checkout([
+                $class: 'GitSCM', 
+                branches: [[name: '*/main']], 
+                extensions: [[$class: 'CleanCheckout']], 
+                userRemoteConfigs: [[credentialsId: 'github_repo', url: 'git@github.com:Alexarikel/super-barnacle.ci-cd.git/']]
+                ])
+            }
+        }
+        stage('Change application version') {
+            steps {
+                sh """
+                cd app-chart/
+                sed -i 's/appVersion: "1.1"/appVersion: "${IMAGE_TAG}"/' Chart.yaml
+                git config user.email "${MAIL}"
+                git config user.name "Jenkins"
+                git checkout main && git add Chart.yaml && git commit -m "bump version - ${IMAGE_TAG}" && git push
+                """
+            }
+        }
     }
     post {
         failure {
@@ -70,3 +91,4 @@ pipeline {
         }
     }
 }
+
