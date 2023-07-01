@@ -19,7 +19,7 @@ pipeline {
                 branches: [[name: '*/main']],
                 extensions: [
                 [$class: 'SparseCheckoutPaths', 
-                sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:'/app/']]]
+                sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:'/image/']]]
                 ],
                 userRemoteConfigs: [[credentialsId: 'github_repo', url: 'git@github.com:Alexarikel/super-barnacle.git/']]])
             }
