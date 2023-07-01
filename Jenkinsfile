@@ -38,7 +38,7 @@ pipeline {
             steps {
                 echo "Building image.."
                 sh """
-                cd app/
+                cd image/
                 docker build -t app:1.${BUILD_NUMBER} -t app:latest .
                 """
             }
