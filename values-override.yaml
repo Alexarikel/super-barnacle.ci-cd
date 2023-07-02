@@ -1,0 +1,10 @@
+---
+db:
+  name: database1
+  table: report
+  databaseUrl: terraform.example.us-east-1.rds.amazonaws.com
+
+image:
+  repository: alexa.dkr.ecr.us-east-1.amazonaws.com/my-app
+  tag: ""
+  dockerKeySecret: ecr-cred
