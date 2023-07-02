@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: myapp-argo-application
+  name: myapp
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -11,6 +11,9 @@ spec:
     repoURL: git@github.com:Alexarikel/super-barnacle.ci-cd.git
     targetRevision: HEAD
     path: app-chart
+    helm:
+      valueFiles:
+        - ../values-override.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: myapp
