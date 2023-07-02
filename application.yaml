@@ -8,11 +8,11 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Alexarikel/super-barnacle.ci-cd.git
+    repoURL: git@github.com:Alexarikel/super-barnacle.ci-cd.git
     targetRevision: HEAD
     path: app-chart
   destination:
-    server: https://D6BDC82895858FEBE43A13266A8E3F28.gr7.us-east-1.eks.amazonaws.com
+    server: https://kubernetes.default.svc
     namespace: myapp
   syncPolicy:
     syncOptions:
