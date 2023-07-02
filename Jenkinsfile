@@ -68,7 +68,7 @@ pipeline {
                 cd super-barnacle.ci-cd/app-chart/
                 sed -i 's/appVersion:.*/appVersion: "${IMAGE_TAG}"/' Chart.yaml
                 git config user.email "${MAIL}" && git config user.name "Jenkins"
-                git checkout main && git add Chart.yaml && git commit -m "bump version - ${IMAGE_TAG}" && git push
+                git add Chart.yaml && git commit -m "bump version - ${IMAGE_TAG}" && git push
                 rm -r ../../super-barnacle.ci-cd/
                 """
             }
